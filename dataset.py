@@ -6,6 +6,8 @@ import cv2
 import json
 import glob
 import shutil
+
+
 def prepare_dataset(root_dir=None, output_dir=None, train=True, rm_files=True):
     if train:
         root = os.path.join(root_dir, 'train')
@@ -19,10 +21,15 @@ def prepare_dataset(root_dir=None, output_dir=None, train=True, rm_files=True):
             shutil.rmtree(output_dir)
         os.makedirs(output_dir)
 
-        os.makedirs(os.path.join(output_dir, 'images', 'train'))
-        os.makedirs(os.path.join(output_dir, 'images', 'val'))
-        os.makedirs(os.path.join(output_dir, 'labels', 'train'))
-        os.makedirs(os.path.join(output_dir, 'labels', 'val'))
+        # os.makedirs(os.path.join(output_dir, 'images', 'train'))
+        # os.makedirs(os.path.join(output_dir, 'images', 'val'))
+        # os.makedirs(os.path.join(output_dir, 'labels', 'train'))
+        # os.makedirs(os.path.join(output_dir, 'labels', 'val'))
+
+        os.makedirs(os.path.join(output_dir, 'train', 'images'))
+        os.makedirs(os.path.join(output_dir, 'train', 'labels'))
+        os.makedirs(os.path.join(output_dir, 'valid', 'images'))
+        os.makedirs(os.path.join(output_dir, 'valid', 'labels'))
 
     json_file = list(glob.iglob("{}/*.json".format(root)))
     print(json_file)
@@ -41,7 +48,7 @@ def prepare_dataset(root_dir=None, output_dir=None, train=True, rm_files=True):
         for image in images_name:
             image_path = os.path.join(root, image)
             read_image = cv2.imread(image_path)
-            cv2.imwrite(os.path.join(output_dir, 'images', 'train', '{}.jpg'.format(count)), read_image)
+            cv2.imwrite(os.path.join(output_dir, 'train', 'images', '{}.jpg'.format(count)), read_image)
 
             current_bboxes = []
             for obj in images_json:
@@ -53,14 +60,14 @@ def prepare_dataset(root_dir=None, output_dir=None, train=True, rm_files=True):
                             category_id = annotation['category_id']
                             current_bboxes.append([bbox, category_id])
 
-            with open(os.path.join(output_dir, 'labels', 'train', '{}.txt'.format(count)), 'w') as text_file:
+            with open(os.path.join(output_dir, 'train', 'labels', '{}.txt'.format(count)), 'w') as text_file:
                 for box in current_bboxes:
                     (xmin, ymin, width, height), cat = box
                     xcent = (xmin + width / 2) / global_width
                     ycent = (ymin + height / 2) / global_height
                     width /= global_width
                     height /= global_height
-                    text_file.write("{} {:.6f} {:.6f} {:.6f} {:.6f}\n".format(cat, xcent, ycent, width, height))
+                    text_file.write("{} {:.6f} {:.6f} {:.6f} {:.6f}\n".format(cat - 1, xcent, ycent, width, height))
 
             count += 1
             print(count)
@@ -69,7 +76,7 @@ def prepare_dataset(root_dir=None, output_dir=None, train=True, rm_files=True):
         for image in images_name:
             image_path = os.path.join(root, image)
             read_image = cv2.imread(image_path)
-            cv2.imwrite(os.path.join(output_dir, 'images', 'val', '{}.jpg'.format(count)), read_image)
+            cv2.imwrite(os.path.join(output_dir, 'valid', 'images', '{}.jpg'.format(count)), read_image)
 
             current_bboxes = []
             for obj in images_json:
@@ -81,22 +88,23 @@ def prepare_dataset(root_dir=None, output_dir=None, train=True, rm_files=True):
                             category_id = annotation['category_id']
                             current_bboxes.append([bbox, category_id])
 
-            with open(os.path.join(output_dir, 'labels', 'val', '{}.txt'.format(count)), 'w') as text_file:
+            with open(os.path.join(output_dir, 'valid', 'labels', '{}.txt'.format(count)), 'w') as text_file:
                 for box in current_bboxes:
                     (xmin, ymin, width, height), cat = box
                     xcent = (xmin + width / 2) / global_width
                     ycent = (ymin + height / 2) / global_height
                     width /= global_width
                     height /= global_height
-                    text_file.write("{} {:.6f} {:.6f} {:.6f} {:.6f}\n".format(cat, xcent, ycent, width, height))
+                    text_file.write("{} {:.6f} {:.6f} {:.6f} {:.6f}\n".format(cat - 1, xcent, ycent, width, height))
 
             count += 1
             print(count)
 
+
 if __name__ == '__main__':
     prepare_dataset(root_dir='dataset_coco/player', output_dir='dataset_yolo/player', train=True, rm_files=True)
-    prepare_dataset(root_dir='dataset_coco/player', output_dir='dataset_yolo/player',  train=False, rm_files=False)
+    prepare_dataset(root_dir='dataset_coco/player', output_dir='dataset_yolo/player', train=False, rm_files=False)
     prepare_dataset(root_dir='dataset_coco/court', output_dir='dataset_yolo/court', train=True, rm_files=True)
-    prepare_dataset(root_dir='dataset_coco/court', output_dir='dataset_yolo/court',  train=False, rm_files=False)
+    prepare_dataset(root_dir='dataset_coco/court', output_dir='dataset_yolo/court', train=False, rm_files=False)
     prepare_dataset(root_dir='dataset_coco/shuttle', output_dir='dataset_yolo/shuttle', train=True, rm_files=True)
-    prepare_dataset(root_dir='dataset_coco/shuttle', output_dir='dataset_yolo/shuttle',  train=False, rm_files=False)
+    prepare_dataset(root_dir='dataset_coco/shuttle', output_dir='dataset_yolo/shuttle', train=False, rm_files=False)
