@@ -39,10 +39,10 @@ This project utilizes computer vision techniques to detect players and shuttleco
 
 4. Result
 
-![Result](outputs/example_results.png)
-![Result](outputs/confusion_matrix.png)
-![Result](outputs/PR_curve.png)
-![Result](outputs/val_batch2_pred.jpg)
+![Result](train/player_output/models/results.png)
+![Result](train/player_output/models/confusion_matrix_normalized.png)
+![Result](train/shuttle_output/models/results.png)
+![Result](train/shuttle_output/models/confusion_matrix_normalized.png)
 
 ## Dataset Preparation
 Ensure your dataset contains diverse videos or images of badminton matches, depicting various players, courts, and lighting conditions. Annotated bounding boxes should accurately enclose the players and shuttlecock in the frames.
