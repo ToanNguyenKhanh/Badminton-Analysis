@@ -6,7 +6,7 @@ This project utilizes computer vision techniques to detect players and shuttleco
 ## Result
 
 <p align="center">
-  <img src="output_video.mp4" alt="Demo video">
+  <img src="outputvideo.gif" alt="Demo video">
 </p>
 
 <p align="center"><em>Result</em></p> 
