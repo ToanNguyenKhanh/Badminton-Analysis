@@ -18,6 +18,7 @@ def main():
     # shuttle detection
     shuttle_tracker = ShuttleTracker(model_path="train/shuttle_output/models/weights/best.pt", )
     shuttle_detect = shuttle_tracker.detect_shuttle(frames, last_detect=True, path_of_last_detect="last_detect/list_shuttle_dict.pkl")
+    shuttle_detect = shuttle_tracker.interpolate_shuttle_position(shuttle_detect)
 
     ### draw ###
     # draw player bbox
