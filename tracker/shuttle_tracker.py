@@ -44,8 +44,18 @@ class ShuttleTracker:
 
         return shuttle_detections
 
-    def interpolate_shuttle_position(self, frames, positions):
-        pass
+    def interpolate_shuttle_position(self,ball_positions):
+        ball_positions = [x.get(0, []) for x in ball_positions]
+        # convert list into pandas dataframe
+        df_ball_positions = pd.DataFrame(ball_positions, columns=['x1', 'y1', 'x2', 'y2'])
+        df_ball_positions = df_ball_positions.interpolate()
+        # No detect at first frame
+        df_ball_positions = df_ball_positions.bfill()
+
+        # convert back to list
+        ball_positions = [{0: x} for x in df_ball_positions.to_numpy().tolist()]
+        # print(ball_positions)
+        return ball_positions
 
     def shuttle_position(self, frames):
         pass
