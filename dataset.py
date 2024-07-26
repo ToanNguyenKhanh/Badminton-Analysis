@@ -65,7 +65,8 @@ def prepare_dataset(root_dir=None, output_dir=None, train=True, rm_files=True):
 if __name__ == '__main__':
     prepare_dataset(root_dir='data_coco/player', output_dir='data_yolo/player', train=True, rm_files=True)
     prepare_dataset(root_dir='data_coco/player', output_dir='data_yolo/player', train=False, rm_files=False)
-    # prepare_dataset(root_dir='dataset_coco/court', output_dir='dataset_yolo/court', train=True, rm_files=True)
-    # prepare_dataset(root_dir='dataset_coco/court', output_dir='dataset_yolo/court', train=False, rm_files=False)
     prepare_dataset(root_dir='data_coco/shuttle', output_dir='data_yolo/shuttle', train=True, rm_files=True)
     prepare_dataset(root_dir='data_coco/shuttle', output_dir='data_yolo/shuttle', train=False, rm_files=False)
+    # prepare_dataset(root_dir='dataset_coco/court', output_dir='dataset_yolo/court', train=True, rm_files=True)
+    # prepare_dataset(root_dir='dataset_coco/court', output_dir='dataset_yolo/court', train=False, rm_files=False)
+
