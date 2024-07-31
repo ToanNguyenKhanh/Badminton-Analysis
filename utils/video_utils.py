@@ -23,3 +23,7 @@ def save_video(frames, ori_video_path, output_video_path):
     for frame in frames:
         out.write(frame)
     out.release()
+
+def convert_meters_to_pixels(frames):
+    pass
+
