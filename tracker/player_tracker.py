@@ -44,6 +44,10 @@ class PlayerTracker:
                 pickle.dump(player_detections, f)
 
         return player_detections
+
+    def player_positions():
+        pass
+    
     def draw_player_bbox(self, frames, player_detections):
         # player_detections = self.detect_player(frames)
         player_frames = []
