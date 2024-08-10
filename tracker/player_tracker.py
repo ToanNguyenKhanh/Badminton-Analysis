@@ -45,8 +45,18 @@ class PlayerTracker:
 
         return player_detections
 
-    def player_positions():
-        pass
+    def player_positions(frames, detections):
+        c_positions = {}
+        c_bboxes = []
+        for k, bbox in zip(detections.keys(), detections.values()):
+            x1,y1,x2,y2=det
+            c_x = int(x2-x1)/2
+            c_y = int(y2-y1)/2
+            id = k
+            c_bboxes.append(c_x)
+            c_bboxes.append(c_y)
+            c_positions = {id : c_bboxes}
+        return c_positions        
     
     def draw_player_bbox(self, frames, player_detections):
         # player_detections = self.detect_player(frames)
